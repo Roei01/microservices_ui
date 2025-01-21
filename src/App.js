@@ -12,7 +12,7 @@ const App = () => {
   const tabs = {
     user: {
       title: "User Service",
-      endpoint: "http://127.0.0.1:5001/users", // קריאה ישירה לשירות
+      endpoint: "http://13.61.3.70/users",
     },
     menu: {
       title: "Menu Service",
