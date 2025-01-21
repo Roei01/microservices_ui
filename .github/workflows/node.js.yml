@@ -28,9 +28,5 @@ jobs:
         cache: 'npm'
 
     - name: Deploy to Render
-      if: ${{ github.ref == 'refs/heads/main' }} # Deploy only on the main branch
       run: |
-        curl -X POST \
-        -H "Accept: application/json" \
-        -H "Authorization: Bearer g5RRkga1FEs" \
-        "https://api.render.com/deploy/srv-cu7r1h3v2p9s73bis7p0"
+        curl "https://api.render.com/deploy/srv-cu7r1h3v2p9s73bis7p0"
