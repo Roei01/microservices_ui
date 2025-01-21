@@ -12,27 +12,27 @@ const App = () => {
   const tabs = {
     user: {
       title: "User Service",
-      endpoint: "http://13.61.3.70/users",
+      endpoint: "http://13.61.3.70:5001/users",
     },
     menu: {
       title: "Menu Service",
-      endpoint: "http://127.0.0.1:5002/menus",
+      endpoint: "http://13.61.3.70:5002/menus",
     },
     order: {
       title: "Order Service",
-      endpoint: "http://127.0.0.1:5003/orders",
+      endpoint: "http://13.61.3.70:5003/orders",
     },
     payment: {
       title: "Payment Service",
-      endpoint: "http://127.0.0.1:5004/payments",
+      endpoint: "http://13.61.3.70:5004/payments",
     },
     notification: {
       title: "Notification Service",
-      endpoint: "http://127.0.0.1:5005/notifications",
+      endpoint: "http://13.61.3.70:5005/notifications",
     },
     analytics: {
       title: "Analytics Service",
-      endpoint: "http://127.0.0.1:5006/analytics",
+      endpoint: "http://13.61.3.70:5006/analytics",
     },
   };
 
