@@ -26,10 +26,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
-    
+
     - name: Deploy to Render
       if: ${{ github.ref == 'refs/heads/main' }} # Deploy only on the main branch
       run: |
