@@ -1,6 +1,19 @@
 import React from "react";
-import { Typography, Box, Grid, Card, CardContent, Avatar, IconButton } from "@mui/material";
-import { NotificationsActive, CheckCircle, Error, Person } from "@mui/icons-material";
+import {
+  Typography,
+  Box,
+  Grid,
+  Card,
+  CardContent,
+  Avatar,
+  IconButton,
+} from "@mui/material";
+import {
+  NotificationsActive,
+  CheckCircle,
+  Error,
+  Person,
+} from "@mui/icons-material";
 
 const NotificationService = ({ data }) => {
   if (!data || Object.keys(data).length === 0) {
