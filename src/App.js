@@ -24,38 +24,51 @@ const App = () => {
   // We'll store either an empty string (no error) or a message:
   const [error, setError] = useState("");
 
-  // Define the service endpoints
+  // Define the service endpoints with fallbacks
   const tabs = {
     user: {
       title: "User Service",
-      endpoint: "http://13.61.137.163:30001/users",
+      endpoints: [
+        "http://13.61.137.163:30001/users", // Primary service
+        "http://13.61.137.163:30008/users", // Backup service
+      ],
     },
     menu: {
       title: "Menu Service",
-      endpoint: "http://13.61.137.163:30002/menus",
+      endpoints: [
+        "http://13.61.137.163:30002/menus", // Only primary service
+      ],
     },
     order: {
       title: "Order Service",
-      endpoint: "http://13.61.137.163:30003/orders",
+      endpoints: [
+        "http://13.61.137.163:30003/orders", // Only primary service
+      ],
     },
     payment: {
       title: "Payment Service",
-      endpoint: "http://13.61.137.163:30004/payments",
+      endpoints: [
+        "http://13.61.137.163:30004/payments", // Primary service
+        "http://13.61.137.163:30010/payments", // Backup service
+      ],
     },
     notification: {
       title: "Notification Service",
-      endpoint: "http://13.61.137.163:30005/notifications",
+      endpoints: [
+        "http://13.61.137.163:30005/notifications", // Only primary service
+      ],
     },
     analytics: {
       title: "Analytics Service",
-      endpoint: "http://13.61.137.163:30006/analytics",
+      endpoints: [
+        "http://13.61.137.163:30006/analytics", // Only primary service
+      ],
     },
   };
 
   /**
-   * Fetch data from the selected tab’s endpoint.
-   * If it succeeds, store the JSON result in 'data'.
-   * If it fails, set an error message.
+   * Fetch data from the selected tab’s endpoints.
+   * Tries each endpoint in the list until one succeeds.
    */
   const fetchData = async () => {
     setLoading(true);
@@ -63,14 +76,30 @@ const App = () => {
     setData(null);
 
     try {
-      const response = await fetch(tabs[currentTab].endpoint);
-      if (!response.ok) {
-        throw new Error(`Service returned status: ${response.status}`);
+      const endpoints = tabs[currentTab].endpoints;
+      let success = false;
+
+      for (const endpoint of endpoints) {
+        try {
+          const response = await fetch(endpoint);
+          if (!response.ok) {
+            throw new Error(`Service returned status: ${response.status}`);
+          }
+          const result = await response.json();
+          setData(result);
+          success = true;
+          break; // Exit the loop if the request succeeded
+        } catch (err) {
+          console.error(`Error fetching from ${endpoint}:`, err.message);
+        }
       }
-      const result = await response.json();
-      setData(result);
+
+      if (!success) {
+        throw new Error(
+          "All endpoints failed. Please try again later or contact support."
+        );
+      }
     } catch (err) {
-      // Provide a more user-friendly error message
       setError(
         "The service is not available right now. Please try again later."
       );
